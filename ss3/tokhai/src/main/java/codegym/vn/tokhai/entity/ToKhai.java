@@ -14,5 +14,5 @@ public class ToKhai {
     private LocalDate ngayKhoiHanh;
     private LocalDate ngayKetThuc;
     private String diaDiemDiQua;
-    private String 
+    private String
 }

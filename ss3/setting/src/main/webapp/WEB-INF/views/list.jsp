@@ -20,7 +20,10 @@
             <td>${setting.id}</td>
             <td>${setting.languages}</td>
             <td>${setting.pageSize}</td>
-            <td>${setting.spamsFilter}</td>
+            <td>
+                <c:if test="${setting.spamsFilter==true}"> Spam Filter</c:if>
+                <c:if test="${setting.spamsFilter==false}">No Spam Filter</c:if>
+            </td>
             <td>${setting.signature}</td>
             <td>
                 <a href="/setting?id=${setting.id}">Edit</a>
