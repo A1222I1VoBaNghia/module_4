@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List blog</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+        .active {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+<h1>List blog</h1>
+<a th:href="@{/blog/create}">Create blog</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Author</th>
+        <th>Publish</th>
+        <th>Category</th>
+        <th>Content</th>
+    </tr>
+    <tr th:each="b : ${blogs}" th:object="${b}">
+        <td th:text="*{blogId}"></td>
+        <td th:text="*{author}"></td>
+        <td th:text="*{#dates.format(datePublish,'dd/MM/yyyy')}"></td>
+        <td th:text="*{blogCategory.categoryName}"></td>
+        <td th:text="*{content}"></td>
+        <td th:href="@{/blog/detail (id=*{blogId})}">Detail</td>
+        <td th:href="@{/blog/update(id=*{blogId})}">Detail</td>
+        <td th:href="@{/blog/delete(id=*{blogId})}">Detail</td>
+    </tr>
+</table>
+<div th:if="${books.totalPages > 1}">
+    <a th:each="pageNumber: ${pageNumbers}"
+       th:href="@{/book/listPaging(page=${pageNumber}, size=${books.size})}"
+       th:text="${pageNumber}"
+       th:class="${pageNumber == books.number + 1} ? active"></a>
+</div>
+</body>
+</html>

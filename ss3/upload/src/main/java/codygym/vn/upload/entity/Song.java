@@ -1,19 +1,21 @@
 package codygym.vn.upload.entity;
 
+import javafx.scene.media.AudioTrack;
+
 import java.util.List;
 
 public class Song {
     private int id;
     private String nameSong;
-    private String author;
-    private List<String> formatSong;
+    private String singer;
+    private String category;
     private String link;
 
-    public Song(int id, String nameSong, String author, List<String> formatSong, String link) {
+    public Song(int id, String nameSong, String singer, String category, String link) {
         this.id = id;
         this.nameSong = nameSong;
-        this.author = author;
-        this.formatSong = formatSong;
+        this.singer = singer;
+        this.category = category;
         this.link = link;
     }
 
@@ -36,20 +38,20 @@ public class Song {
         this.nameSong = nameSong;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getSinger() {
+        return singer;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setSinger(String singer) {
+        this.singer = singer;
     }
 
-    public List<String> getFormatSong() {
-        return formatSong;
+    public String getCategory() {
+        return category;
     }
 
-    public void setFormatSong(List<String> formatSong) {
-        this.formatSong = formatSong;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getLink() {
@@ -59,20 +61,10 @@ public class Song {
     public void setLink(String link) {
         this.link = link;
     }
-    public String displayFormatSong() {
-        if (formatSong == null) {
-            return "";
-        }
-        StringBuilder builder = new StringBuilder();
-        boolean flag = true;
-        for (String f: formatSong) {
-            if (flag) {
-                flag = false;
-            } else {
-                builder.append(",");
-            }
-            builder.append(f);
-        }
-        return builder.toString();
+    public String getFormatSong(Song song){
+        int endString = song.getLink().length();
+        int startString = endString-4;
+        return song.getLink().substring(startString,endString);
     }
+
 }

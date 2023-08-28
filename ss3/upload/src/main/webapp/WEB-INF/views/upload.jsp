@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -26,19 +27,36 @@
         <tr>
             <td>Author:</td>
             <td colspan="2">
-                <form:input path="author"/>
+                <form:input path="singer"/>
             </td>
         </tr>
         <tr>
-            <td>Format Song:</td>
+            <td>Category: </td>
             <td colspan="2">
-                <form:checkboxes path="formatSong" items="${formatSongs}"/>
+                <form:input path="category"/>
             </td>
         </tr>
         <tr>
             <td>Link:</td>
             <td colspan="2">
-                <form:input path="link"/>
+                <c:choose>
+                    <c:when test="${song.getFormatSong(song.link).equals('.mp3')}">
+                        <form:input path="link"/>
+                    </c:when>
+                    <c:when test="${song.getFormatSong(song.link).equals('.wav')}">
+                        <form:input path="link"/>
+                    </c:when>
+                    <c:when test="${song.getFormatSong(song.link).equals('.ogg')}">
+                        <form:input path="link"/>
+                    </c:when>
+                    <c:when test="${song.getFormatSong(song.link).equals('.m4p')}">
+                        <form:input path="link"/>
+                    </c:when>
+                    <c:otherwise>
+                        <form:label path=>
+                    </c:otherwise>
+                </c:choose>
+
             </td>
         </tr>
         <tr>

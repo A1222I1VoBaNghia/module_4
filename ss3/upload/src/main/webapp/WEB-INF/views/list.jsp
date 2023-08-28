@@ -12,16 +12,20 @@
         <th>ID</th>
         <th>Name Song</th>
         <th>Author</th>
-        <th>Format Song</th>
+        <th>Category</th>
         <th>Link</th>
+        <th>Play</th>
     </tr>
     <c:forEach items="${songs}" var="song">
         <tr>
             <td>${song.id}</td>
             <td>${song.nameSong}</td>
-            <td>${song.author}</td>
-            <td>${song.displayFormatSong()}</td>
+            <td>${song.singer}</td>
+            <td>${song.category}</td>
             <td>${song.link}</td>
+            <td>
+                <a href="/play?id=${song.id}">Play</a>
+            </td>
         </tr>
     </c:forEach>
 </table>
