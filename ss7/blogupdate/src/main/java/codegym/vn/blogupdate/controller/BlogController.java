@@ -1,6 +1,7 @@
 package codegym.vn.blogupdate.controller;
 
 import codegym.vn.blogupdate.entity.Blog;
+import codegym.vn.blogupdate.entity.BlogCategory;
 import codegym.vn.blogupdate.service.BlogCategoryService;
 import codegym.vn.blogupdate.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,11 @@ public class BlogController {
     @Autowired
     private BlogCategoryService blogCategoryService;
 
-    @GetMapping("/list")
-    public String displayBlog(Model model){
-        model.addAttribute("blogs", blogService.findAllBlog());
-        return"blog/list";
-    }
+//    @GetMapping("/list")
+//    public String displayBlog(Model model){
+//        model.addAttribute("blogs", blogService.findAllBlog());
+//        return "blog/listPaging";
+//    }
 
     @GetMapping("/create")
     public String displayCreate(Model model) {
@@ -38,9 +39,9 @@ public class BlogController {
         return "blog/create";
     }
     @PostMapping("/create")
-    public String createBook(@ModelAttribute("blog") Blog blog) {
+    public String createBlog(@ModelAttribute("blog") Blog blog) {
         blogService.createBlog(blog);
-        return "redirect:/blog/list";
+        return "redirect:/blog/listPaging";
     }
     @GetMapping("/listPaging")
     public String displayBlogPaging(Model model,
@@ -49,8 +50,8 @@ public class BlogController {
                                     @RequestParam("sort")Optional<String> sort) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
-        String sortField = sort.orElse("name");
-        Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by(sortField).ascending());
+        String sortField = sort.orElse("datePublish");
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by(sortField).descending());
         Page<Blog> blogs = blogService.findAll(pageable);
         model.addAttribute("blogs", blogs);
         int totalPage = blogs.getTotalPages();
@@ -60,6 +61,38 @@ public class BlogController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-        return "blog/list";
+        return "blog/listPaging";
+    }
+
+    @GetMapping("/createCategory")
+    public String displayCreateBlogCategory(Model model) {
+        model.addAttribute("blogCategory", new BlogCategory());
+        return "blog/createCategory";
+    }
+    @PostMapping("/createCategory")
+    public String createBlogCategory(@ModelAttribute("blogCategory") BlogCategory blogCategory) {
+        blogCategoryService.create(blogCategory);
+        return "redirect:/blog/listPaging";
+    }
+
+    @GetMapping("/detail")
+    public String displayDetail(Model model, @RequestParam("id") String id) {
+        Blog blog = blogService.findBlogById(id);
+        model.addAttribute("blog", blog);
+        return "blog/detail";
+    }
+
+    @GetMapping("/update")
+    public String displayUpdate(Model model, @RequestParam("id") String id) {
+        blogService.findBlogById(id);
+        model.addAttribute("blog", blogService.findBlogById(id));
+        model.addAttribute("blogCategories", blogCategoryService.findAll());
+        return "blog/update";
+    }
+    @PostMapping("/update")
+    public String doUpdate(@ModelAttribute Blog blog, @RequestAttribute("id") String id) {
+        blogService.findBlogById(id);
+        blogService.updateBlog( blogService.findBlogById(id));
+        return "redirect:/blog/listPaging";
     }
 }

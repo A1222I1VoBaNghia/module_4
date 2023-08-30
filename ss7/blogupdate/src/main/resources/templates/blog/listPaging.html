@@ -24,6 +24,9 @@
         <th>Publish</th>
         <th>Category</th>
         <th>Content</th>
+        <th>Detail</th>
+        <th>Edit</th>
+        <th>Delete</th>
     </tr>
     <tr th:each="b : ${blogs}" th:object="${b}">
         <td th:text="*{blogId}"></td>
@@ -31,16 +34,16 @@
         <td th:text="*{#dates.format(datePublish,'dd/MM/yyyy')}"></td>
         <td th:text="*{blogCategory.categoryName}"></td>
         <td th:text="*{content}"></td>
-        <td th:href="@{/blog/detail (id=*{blogId})}">Detail</td>
-        <td th:href="@{/blog/update(id=*{blogId})}">Detail</td>
-        <td th:href="@{/blog/delete(id=*{blogId})}">Detail</td>
+        <td><a th:href="@{/blog/detail(id=*{blogId})}">Detail</a></td>
+        <td><a th:href="@{/blog/update(id=*{blogId})}">Edit</a></td>
+        <td><a th:href="@{/blog/delete(id=*{blogId})}">Delete</a></td>
     </tr>
 </table>
-<div th:if="${books.totalPages > 1}">
+<div th:if="${blogs.totalPages > 1}">
     <a th:each="pageNumber: ${pageNumbers}"
-       th:href="@{/book/listPaging(page=${pageNumber}, size=${books.size})}"
+       th:href="@{/blog/listPaging(page=${pageNumber}, size=${blogs.size})}"
        th:text="${pageNumber}"
-       th:class="${pageNumber == books.number + 1} ? active"></a>
+       th:class="${pageNumber == blogs.number + 1} ? active"></a>
 </div>
 </body>
 </html>

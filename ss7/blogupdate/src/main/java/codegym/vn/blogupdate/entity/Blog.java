@@ -1,5 +1,7 @@
 package codegym.vn.blogupdate.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -12,7 +14,7 @@ public class Blog {
     private String content;
 
     private String author;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date datePublish;
 
 

@@ -2,16 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Blog</title>
+    <title>Update Blog</title>
 </head>
 <body>
-<h1>Create blog</h1>
-<form th:action="@{/blog/create}" method="post" th:object="${blog}">
+<h1>Create Blog</h1>
+<form th:action="@{/blog/update}" method="post" th:object="${blog}">
     <table>
-        <tr>
-            <td>ID</td>
-            <td><input type="text" th:field="*{blogId}"></td>
-        </tr>
         <tr>
             <td>Author</td>
             <td><input type="text" th:field="*{author}"></td>
@@ -33,7 +29,8 @@
             </td>
         </tr>
     </table>
-    <input type="submit" value="Create Blog"/>
+    <input type="hidden" th:hidden="*{blogId}">
+    <input type="submit" value="Update Blog"/>
 </form>
 </body>
 </html>

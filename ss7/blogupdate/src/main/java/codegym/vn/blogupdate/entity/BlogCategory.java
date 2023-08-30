@@ -14,7 +14,7 @@ public class BlogCategory {
 
     private String categoryName;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "blogCategory")
     private List<Blog> blogs;
 
     public BlogCategory() {

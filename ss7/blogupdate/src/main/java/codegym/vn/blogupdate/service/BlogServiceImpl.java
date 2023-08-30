@@ -1,7 +1,6 @@
 package codegym.vn.blogupdate.service;
 
 import codegym.vn.blogupdate.entity.Blog;
-import codegym.vn.blogupdate.entity.BlogCategory;
 import codegym.vn.blogupdate.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
