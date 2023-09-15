@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List book</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+        .active {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+<h1>List book</h1>
+<a th:href="@{/book/create}">Create book</a>
+<table th:border="1px">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Short Content</th>
+        <th>Quantity</th>
+        <th>Borrow</th>
+    </tr>
+    <tr th:each="b : ${books}" th:object="${b}">
+        <td th:text="*{bookID}"></td>
+        <td th:text="*{bookName}"></td>
+        <td th:text="*{author}"></td>
+        <td th:text="*{shortContent}"></td>
+        <td th:text="*{numberOfBook}"></td>
+        <td><a th:href="@{/book/detail(id=*{bookID})}">Borrow</a></td>
+    </tr>
+</table>
+<div th:if="${books.totalPages > 1}">
+    <a th:each="pageNumber: ${pageNumbers}"
+       th:href="@{/book/list(page=${pageNumber}, size=${books.size})}"
+       th:text="${pageNumber}"
+       th:class="${pageNumber == books.number + 1} ? active"></a>
+</div>
+</body>
+</html>
