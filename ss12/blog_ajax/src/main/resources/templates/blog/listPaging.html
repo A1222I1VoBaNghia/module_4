@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>List blog</title>
+  <style>
+    a {
+      text-decoration: none;
+    }
+    .active {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+<h1>List blog</h1>
+<a th:href="@{/blog/create}">Create blog</a>
+Search: <input type="text" id="name" oninput="searchByContentOrAuthorOrCategory()"/>
+<br/>
+<button onclick="searchByContentOrAuthorOrCategory();">Search</button>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Author</th>
+    <th>Publish</th>
+    <th>Category</th>
+    <th>Content</th>
+    <th>Detail</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  <tbody id="result">
+  <tr th:each="b : ${blogs}" th:object="${b}">
+    <td th:text="*{blogId}"></td>
+    <td th:text="*{author}"></td>
+    <td th:text="*{#dates.format(datePublish,'dd/MM/yyyy')}"></td>
+    <td th:text="*{blogCategory.categoryName}"></td>
+    <td th:text="*{content}"></td>
+    <td><a th:href="@{/blog/detail(id=*{blogId})}">Detail</a></td>
+    <td><a th:href="@{/blog/update(id=*{blogId})}">Edit</a></td>
+    <td><a th:href="@{/blog/delete(id=*{blogId})}">Delete</a></td>
+  </tr>
+  </tbody>
+</table>
+<!--<div th:if="${blogs.totalPages > 1}">-->
+<!--  <a th:each="pageNumber: ${pageNumbers}"-->
+<!--     th:href="@{/blog/listPaging(page=${pageNumber}, size=${blogs.size})}"-->
+<!--     th:text="${pageNumber}"-->
+<!--     th:class="${pageNumber == blogs.number + 1} ? active"></a>-->
+<!--</div>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+  function searchByContentOrAuthorOrCategory() {
+    let keyword = $("#name").val();
+    $.ajax({
+      url: "http://localhost:8080/api/blog/search",
+      data: {
+        keyword: keyword
+      },
+      type: "get",
+      dataType: "json",
+      success: function(res) {
+        let result = "";
+        for (let i = 0; i < res.length; i++) {
+          result += "<tr>" +
+                  "<td>" + res[i].blogId + "</td>" +
+                  "<td>" + res[i].author + "</td>" +
+                  "<td>" + res[i].datePublish + "</td>" +
+                  "<td>" + res[i].blogCategory.categoryName + "</td>" +
+                  "<td>" + res[i].content + "</td>" +
+                  "<td><a href='/blog/detail?blogId=" + res[i].blogId + "'>Detail</a></td>" +
+                  "</tr>";
+        }
+
+        $("#result").html(result);
+      }
+    });
+  }
+</script>
+</body>
+</html>
+</body>
+</html>
